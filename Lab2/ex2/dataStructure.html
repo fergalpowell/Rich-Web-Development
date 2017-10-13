@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <script src="dataStructure.js"></script>
+</head>
+<body>
+<button onClick="loadJSON('http://jsonplaceholder.typicode.com/users',
+                   function(data) {
+                       var usernames = [];
+                       var geo = [];
+                       var users = [];
+                       var streets = [];
+                       var totalIds = 0;
+                       for(var i =0; i <Object.keys(data).length;i++){
+                           usernames.push(data[i].username);
+                           geo.push(data[i].address.geo);
+                           users.push(new Array(data[i].name, data[i].id, data[i].company.name, data[i].address.zipcode));
+                           if(data[i].address.zipcode[0] == '5'){
+                               streets.push(data[i].address.street);
+                           }
+                           totalIds += data[i].id;
+                       }
+                       console.log(geo);
+                   },
+                   function(xhr) { console.error(xhr); })">click</button>
+</body>
+</html>
