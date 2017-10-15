@@ -30,9 +30,32 @@ function search(username){
                     document.getElementById("gist").innerHTML=data.public_gists;
 
                     loadJSON(data.repos_url, function(data){
-                        for(var i = 0; i < 6;i++){
-                            document.getElementById("name"+(i+1)).innerHTML=data[i].name;
-                            document.getElementById("desc"+(i+1)).innerHTML=data[i].description;
+                        var repos = document.getElementById("repos");
+                        while (repos.childElementCount > 1) {
+                            repos.removeChild(repos.lastChild);
+                        }
+                        for(var i = 0; i < Object.keys(data).length; i++){
+                            var item = document.createElement("li");
+                            item.className="flex-item";
+                            var name = document.createElement("span");
+                            name.innerHTML="<strong>Name: </strong>" + data[i].name;
+                            item.appendChild(name);
+                            var br1 = document.createElement("br");
+                            var br2 = document.createElement("br");
+                            item.appendChild(br1);
+                            item.appendChild(br2);
+                            var desc = document.createElement("span");
+                            desc.innerHTML="<strong>Description: </strong>" + data[i].description;
+                            item.appendChild(desc);
+                            repos.appendChild(item);
+                        }
+                        if(repos.childElementCount === 1){
+                            var item = document.createElement("li");
+                            item.className="flex-item";
+                            var message = document.createElement("span");
+                            message.innerHTML="<strong>No user repositories</strong>";
+                            item.appendChild(message);
+                            repos.appendChild(item);
                         }
                     },function(xhr){console.error(xhr)});
                 },function(xhr){console.error(xhr);});
